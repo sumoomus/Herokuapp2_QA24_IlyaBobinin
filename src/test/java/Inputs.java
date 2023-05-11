@@ -3,6 +3,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -11,7 +12,7 @@ import org.testng.annotations.Test;
 import java.time.Duration;
 
 public class Inputs {
-    private static final String URL = "https://the-internet.herokuapp.com/";
+    private static final String URL = "https://the-internet.herokuapp.com/inputs";
 
     private WebDriver driver;
 
@@ -35,17 +36,25 @@ public class Inputs {
 
     @Test
     public void add() throws InterruptedException {
-        WebElement inputs = driver.findElement(By.xpath("//a[normalize-space()='Inputs']"));
-        inputs.click();
 
-        WebElement inputsField = driver.findElement(By.tagName("input"));
-        inputsField.click();
+        WebElement inputs = driver.findElement(By.tagName("input"));
+        inputs.sendKeys("2");
 
-        inputsField.sendKeys("3");
-        inputsField.sendKeys(Keys.ARROW_UP);
-        inputsField.sendKeys("q");
-        inputsField.sendKeys(Keys.ARROW_DOWN);
-        inputsField.sendKeys("1");
+        String keyResult = driver.findElement(By.tagName("input")).getAttribute("value");
+        Assert.assertEquals(keyResult, "2");
+        inputs.sendKeys(Keys.ARROW_UP);
+
+        String upKeyResult = driver.findElement(By.tagName("input")).getAttribute("value");
+        Assert.assertEquals(upKeyResult, "3");
+        inputs.sendKeys(Keys.ARROW_DOWN);
+
+        String downKeyResult = driver.findElement(By.tagName("input")).getAttribute("value");
+        Assert.assertEquals(downKeyResult, "2");
+
+        inputs.clear();
+        inputs.sendKeys("qwe");
+        String lettersResult = driver.findElement(By.tagName("input")).getAttribute("value");
+        Assert.assertEquals(lettersResult, "");
 
 
     }

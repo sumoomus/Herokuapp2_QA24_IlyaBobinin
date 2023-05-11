@@ -12,7 +12,7 @@ import java.time.Duration;
 
 
 public class Typos {
-    private static final String URL = "https://the-internet.herokuapp.com/";
+    private static final String URL = "https://the-internet.herokuapp.com/typos";
 
     private WebDriver driver;
 
@@ -31,46 +31,15 @@ public class Typos {
 
     @AfterClass
     public void tearDown() {
+
         driver.quit();
     }
 
     @Test
     public void add() throws InterruptedException {
-        WebElement typos = driver.findElement(By.xpath("//a[normalize-space()='Typos']"));
-        typos.click();
 
+        String typos = driver.findElement(By.xpath("//*[@id=\"content\"]/div/p[2]")).getText();
 
-//        я нашел такого вида решение данной задачи
-
-
-//
-//        java.util.List<WebElement> paragraphs = driver.findElements(By.tagName("p"));
-//
-//
-//        String expectedText = "This example demonstrates a typo being introduced. It does it randomly on each page load.";
-//        String actualText = paragraphs.get(0).getText();
-//        if (!actualText.equals(expectedText)) {
-//            System.out.println("Ошибка: текст первого параграфа не соответствует ожидаемому");
-//        }
-//
-//
-//        expectedText = "Sometimes you'll see a typo, other times you won't.";
-//        actualText = paragraphs.get(1).getText();
-//        if (!actualText.equals(expectedText)) {
-//            System.out.println("Ошибка: текст второго параграфа не соответствует ожидаемому");
-//        }
-
-
-//     а тут мое, я не смог ничего качественного придумать
-
-        WebElement text = driver.findElement(By.tagName("p"));
-        Assert.assertTrue(text.isDisplayed());
-        String successText = "This example demonstrates a typo being introduced. It does it randomly on each page load.\n" +
-                "\n" +
-                "Sometimes you'll see a typo, other times you won't.";
-
-        Assert.assertEquals(text.getText(), successText);
-
-
+        Assert.assertEquals(typos, "Sometimes you'll see a typo, other times you won't.", "Error:'won,t' is misspelled");
     }
 }

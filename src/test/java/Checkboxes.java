@@ -9,9 +9,10 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
+import java.util.List;
 
 public class Checkboxes {
-    private static final String URL = "https://the-internet.herokuapp.com/";
+    private static final String URL = "http://the-internet.herokuapp.com/checkboxes";
 
     private WebDriver driver;
 
@@ -36,26 +37,12 @@ public class Checkboxes {
     @Test
     public void add() throws InterruptedException {
 
-        WebElement checkBoxes = driver.findElement(By.xpath("//a[normalize-space()='Checkboxes']"));
-        checkBoxes.click();
+        List<WebElement> checkBoxes = driver.findElements(By.cssSelector("[type=checkbox]"));
+        Assert.assertFalse(checkBoxes.get(0).isSelected());
+        Assert.assertTrue(checkBoxes.get(1).isSelected());
+        checkBoxes.get(1).click();
 
-
-        WebElement checkbox1 = driver.findElement(By.cssSelector("[type=checkbox]"));
-        checkbox1.isEnabled();
-        WebElement successMessage = driver.findElement(By.cssSelector("[type=checkbox]"));
-        Assert.assertTrue(successMessage.isEnabled());
-        checkbox1.click();
-        WebElement successMessage1 = driver.findElement(By.cssSelector("[type=checkbox]"));
-        Assert.assertTrue(successMessage1.isSelected());
-
-
-        WebElement checkbox2 = driver.findElement(By.cssSelector("[type=checkbox]"));
-        checkbox2.isSelected();
-        WebElement successMessage2 = driver.findElement(By.cssSelector("[type=checkbox]"));
-        Assert.assertFalse(successMessage2.isSelected());
-        checkbox2.click();
-        WebElement successMessage3 = driver.findElement(By.cssSelector("[type=checkbox]"));
-        Assert.assertTrue(successMessage3.isEnabled());
+        Assert.assertFalse(checkBoxes.get(1).isSelected());
 
 
     }

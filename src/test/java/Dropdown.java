@@ -13,7 +13,7 @@ import java.time.Duration;
 import java.util.List;
 
 public class Dropdown {
-    private static final String URL = "https://the-internet.herokuapp.com/";
+    private static final String URL = "https://the-internet.herokuapp.com/dropdown";
 
     private WebDriver driver;
 
@@ -37,15 +37,16 @@ public class Dropdown {
 
     @Test
     public void add() throws InterruptedException {
-        WebElement dropDown = driver.findElement(By.xpath("//a[normalize-space()='Dropdown']"));
-        dropDown.click();
+        WebElement dropDown = driver.findElement(By.cssSelector("#dropdown"));
+        Select select = new Select(dropDown);
 
-        WebElement dropDownTab = driver.findElement(By.cssSelector("#dropdown"));
-        dropDownTab.click();
-
-        Select select = new Select(dropDownTab);
         List<WebElement> options = select.getOptions();
+        select.selectByVisibleText("Option 1");
 
+        Assert.assertTrue(options.get(1).isSelected());
+        select.selectByVisibleText("Option 2");
+
+        Assert.assertTrue(options.get(2).isSelected());
         Assert.assertEquals(options.size(), 3);
         Assert.assertEquals(options.get(0).getText(), "Please select an option");
         Assert.assertEquals(options.get(1).getText(), "Option 1");
