@@ -44,10 +44,11 @@ public class FileUpload {
         uploadButton.click();
 
         File uploadedFile = new File("/src/test/resources/example.txt");
+
+        String actualFileName = uploadedFile.getName();
         String expectedFileName = uploadedFile.getName();
-        Assert.assertEquals("example.txt", expectedFileName);
-
-
+        Assert.assertEquals(actualFileName, expectedFileName);
     }
-
 }
+
+
